@@ -7,10 +7,11 @@ import { viteStaticCopy } from 'vite-plugin-static-copy';
 export default defineConfig(() => ({
   server: {
     port: 3000,
-    proxy: {
-      '/api/socket': 'ws://localhost:8082',
-      '/api': 'http://localhost:8082',
-    },
+    proxy: mode === 'development'
+      ? {
+          '/api': 'http://localhost:8082', // only used when running npm start
+        }
+      : undefined,
   },
   build: {
     outDir: 'build',
